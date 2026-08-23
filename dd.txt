@@ -1,30 +1,467 @@
-APPROVED: Proceed to M2.
+# DivideEncode — Strong Core Mission
 
-Implement ONLY M2 entropy-coded LZ2 streams.
+## Objective
 
-Requirements:
-1. Keep V1 completely untouched.
-2. Keep all existing M1 tests and 105,000 fuzz cases passing.
-3. Do not implement M3 container, M4 classifier, M5 optimal parsing, structured modeling, C/Rust acceleration, or multiprocessing.
-4. Preserve the existing M1 token format/API where practical.
-5. Entropy-code the separated LZ2 streams:
-   - literals
-   - match lengths
-   - distances
-   - REP symbols
-6. Use canonical Huffman first. Do not implement rANS yet.
-7. Add complete round-trip tests, truncation tests, malformed-table tests, and corpus tests.
-8. Benchmark:
-   V1 LZ vs V2 M1 raw vs V2 M2 Huffman.
-9. Report:
+Turn DivideEncode into a serious high-performance general-purpose compressor.
+The goal is not to make a cosmetic improvement or merely beat one benchmark.
+The goal is to systematically attack the compression and speed bottlenecks and prove every gain with reproducible benchmarks.
+
+**Primary targets:**
+1. Maximize compression ratio on representative real-world corpora.
+2. Maximize encode/decode throughput without sacrificing correctness.
+3. Minimize memory allocations and peak memory.
+4. Beat the current DivideEncode baseline first, then compete aggressively with established compressors where the workload and mode make a fair comparison possible.
+5. Never trade correctness for benchmark numbers.
+
+Do NOT make unsupported claims such as "beats zstd" or "beats brotli". Every superiority claim must be backed by measured corpus results, exact settings, and reproducible commands.
+
+---
+
+# NON-NEGOTIABLE RULES
+
+- Work only on branch `v3-strong-core`.
+- Preserve a clean, production-quality architecture.
+- Keep public APIs stable unless a measured improvement genuinely requires a versioned API change.
+- Every optimization must have tests.
+- Every compression improvement must have before/after measurements.
+- Every speed optimization must have before/after measurements.
+- Never silently corrupt data.
+- Deterministic output is preferred and should be maintained whenever practical.
+- Do not add AI/ML models. This is a classical algorithmic compressor.
+- Do not blindly copy existing compressor implementations. Design and implement original combinations of well-understood techniques.
+- Do not optimize based on a single synthetic input.
+- Do not remove difficult tests just to obtain a green test run.
+- Do not weaken validation to gain speed.
+
+---
+
+# PHASE 0 — BASELINE AND FORENSICS
+
+Before changing the algorithm:
+
+1. Run the complete test suite.
+2. Run all existing fuzz tests.
+3. Build a benchmark corpus containing at least:
+   - source code
+   - JSON
+   - HTML/CSS/JS
+   - CSV
+   - logs
+   - repetitive text
+   - natural language text
+   - binary data
+   - already-compressed data
+   - small files
+   - medium files
+   - large files
+4. Record for every implementation:
+   - original size
    - compressed size
    - ratio
+   - percentage saved
    - encode time
    - decode time
-   - memory
-   - per-stream sizes
-   - Huffman table overhead
-10. Pay special attention to small files: entropy-table overhead must not make them worse unnecessarily.
-11. Keep a valid fallback when entropy coding is not beneficial.
-12. Do not claim superiority over V1 until measurements prove it.
-13. At the end, STOP. Do not begin M3 without explicit approval.
+   - throughput MB/s
+   - peak memory
+5. Profile the compressor and decoder.
+6. Identify the top CPU and allocation hotspots before rewriting anything.
+
+Create a machine-readable benchmark result so future commits can be compared automatically.
+
+---
+
+# PHASE 1 — FIX THE CORE DATA PATH
+
+Eliminate avoidable overhead before inventing more algorithms.
+
+Investigate and optimize:
+
+- Python object creation inside hot loops.
+- repeated slicing of byte strings.
+- repeated conversions between bytes/bytearray/list/int.
+- per-symbol function-call overhead.
+- temporary buffers.
+- unnecessary copying.
+- repeated scans of the same input.
+- inefficient dictionary/hash-table operations.
+- bitstream writes performed one bit at a time.
+- decoder branches that can be reduced or table-driven.
+- allocation-heavy token representations.
+
+Prefer:
+
+- `memoryview` where it actually reduces copying.
+- contiguous buffers.
+- local-variable binding in hot loops where measurable.
+- table-driven decoding.
+- batch bit operations.
+- compact integer token representations.
+- preallocated buffers where useful.
+- single-pass or fused passes where this does not harm compression decisions.
+
+Do not micro-optimize code that profiling shows is irrelevant.
+
+---
+
+# PHASE 2 — BUILD A STRONG LZ CORE
+
+Improve the current LZ/LZ2 engine aggressively.
+
+Investigate and benchmark:
+
+- hash-chain matching.
+- multi-probe hash tables.
+- rolling hashes.
+- 2-byte/3-byte/4-byte match fingerprints.
+- lazy matching.
+- limited-depth search.
+- match-length acceleration.
+- skip heuristics for incompressible regions.
+- REP distances.
+- short-distance special cases.
+- recent-distance caches.
+- adaptive search depth based on local repetitiveness.
+
+The matcher must have explicit CPU budgets.
+
+A more expensive search is acceptable only when the expected bit savings justify it.
+
+Implement multiple match-search levels, for example:
+
+- FAST
+- BALANCED
+- MAX
+
+The modes must be measurable and deterministic.
+
+---
+
+# PHASE 3 — STRONG TOKEN MODEL
+
+Separate the statistical streams cleanly:
+
+- literals
+- literal context/category if useful
+- match length
+- distance
+- REP symbols
+- token/control symbols
+
+Measure whether each separation actually improves compression.
+
+Do not assume that more streams automatically means better compression.
+
+For each stream calculate:
+
+- entropy estimate
+- number of symbols
+- alphabet size
+- expected coding cost
+- table/header overhead
+
+Use the information to decide whether a specialized representation is worthwhile.
+
+---
+
+# PHASE 4 — BETTER ENTROPY CODING
+
+The current Huffman implementation is only a starting point.
+
+Implement and benchmark in this order:
+
+1. Canonical Huffman optimized for the actual token alphabets.
+2. Fast table-based Huffman decoding.
+3. Adaptive code-length limits.
+4. Better code-length serialization with minimal overhead.
+5. Optional context-specific Huffman tables when justified by measurements.
+6. Only after the above is stable, investigate rANS/FSE-style entropy coding.
+
+For small streams, use compact metadata or raw/unencoded fallback.
+
+Entropy coding must never expand data unnecessarily.
+
+The encoder must compare:
+
+`raw cost + metadata`
+vs
+`entropy-coded cost + metadata`
+
+and select the cheaper representation.
+
+---
+
+# PHASE 5 — CONTEXT MODELING
+
+Investigate lightweight classical context models without machine learning.
+
+Potential experiments:
+
+- order-0 literal frequencies.
+- order-1 contexts.
+- byte-pair/context categories.
+- previous literal + match-state context.
+- text-oriented contexts.
+- binary-oriented contexts.
+- separate literal models for different match/literal regions.
+
+Do not build dozens of contexts blindly.
+Measure compression gain versus model/header cost and CPU cost.
+
+---
+
+# PHASE 6 — TRANSFORMS
+
+Build a small portfolio of reversible transforms selected by cheap analysis.
+
+Candidates include:
+
+- delta coding.
+- XOR/delta combinations where appropriate.
+- byte-plane separation.
+- transpose for structured records.
+- integer-specific transforms.
+- text normalization only when explicitly requested and fully reversible.
+
+Every transform must have:
+
+- exact inverse.
+- corruption detection.
+- unit tests.
+- fuzz coverage.
+- cost estimation before activation.
+
+Never apply a transform merely because it works well on one sample.
+
+---
+
+# PHASE 7 — OPTIMAL / NEAR-OPTIMAL PARSING
+
+Once the matcher and token cost model are reliable, implement a cost-aware parser.
+
+The parser should choose between:
+
+- literal
+- short match
+- long match
+- REP match
+- alternative match candidates
+
+using estimated final coded cost rather than greedy longest-match rules alone.
+
+Start with bounded dynamic programming or beam-like bounded search.
+
+Do NOT allow unbounded search to destroy encode speed.
+
+Benchmark the tradeoff between:
+
+compression gain <-> CPU time.
+
+---
+
+# PHASE 8 — ADAPTIVE STRATEGY SELECTION
+
+Create a cheap classifier based on measurable input properties, NOT AI.
+
+Features may include:
+
+- size.
+- entropy estimate.
+- repetition density.
+- unique-byte count.
+- match density.
+- average match length.
+- literal distribution.
+- local variance.
+- estimated transform gain.
+
+Select among compression strategies such as:
+
+- STORE/raw
+- FAST LZ
+- BALANCED LZ
+- MAX LZ
+- transformed LZ
+- entropy-coded LZ
+
+The classifier itself must be extremely cheap compared with compression.
+
+---
+
+# PHASE 9 — SMALL-FILE AND LARGE-FILE SPECIALIZATION
+
+Small files are a first-class workload.
+
+For small files:
+
+- minimize headers.
+- avoid expensive analysis.
+- avoid unnecessary entropy tables.
+- use compact fixed representations where beneficial.
+
+For large files:
+
+- stream instead of loading unnecessary duplicate copies.
+- consider independent blocks.
+- support parallelizable block processing where it provides a real benefit.
+- maintain bounded memory.
+
+---
+
+# PHASE 10 — DECODER SPEED
+
+Compression ratio is not enough.
+
+Optimize decompression aggressively because the decoder is usually expected to be much faster than the encoder.
+
+Investigate:
+
+- table-driven entropy decoding.
+- branch reduction.
+- bulk literal copying.
+- efficient overlapping match copying.
+- precomputed distance operations.
+- reduced bounds-check overhead where safe.
+- contiguous output buffers.
+
+Decoder correctness has absolute priority.
+
+---
+
+# PHASE 11 — OPTIONAL NATIVE ACCELERATION
+
+Only after the pure-Python algorithm is strong and profiled:
+
+Investigate optional C/Rust acceleration for the actual hotspots.
+
+Requirements:
+
+- pure Python fallback remains functional.
+- native module is optional.
+- identical compressed/decompressed results.
+- fuzz tests run against both implementations.
+- benchmark Python versus native implementation.
+
+Do not introduce native code merely to hide an inefficient algorithm.
+
+---
+
+# PHASE 12 — COMPETITIVE BENCHMARKING
+
+Benchmark against established compressors using fair settings.
+
+At minimum compare against:
+
+- ZIP/DEFLATE.
+- GZIP.
+- Zstandard.
+- Brotli.
+
+Where available also compare other relevant classical compressors.
+
+For every corpus report:
+
+| Compressor | Size | Ratio | Encode MB/s | Decode MB/s | Memory |
+|---|---:|---:|---:|---:|---:|
+
+Also report geometric means across the corpus.
+
+Never cherry-pick a single file and call that victory.
+
+Define explicit targets:
+
+### Compression target
+Beat the current DivideEncode baseline by a substantial measurable margin.
+
+### Speed target
+Improve encode and decode throughput without sacrificing the achieved ratio.
+
+### Competitive target
+Identify workload classes where DivideEncode genuinely wins and optimize those classes further.
+
+If it loses overall, explain exactly why and which bottleneck prevents victory.
+
+---
+
+# PHASE 13 — AUTOMATED REGRESSION GATES
+
+Every major optimization must pass:
+
+1. Unit tests.
+2. Round-trip tests.
+3. Corruption tests.
+4. Truncation tests.
+5. Malformed-header tests.
+6. Random fuzz tests.
+7. Corpus tests.
+8. Performance benchmark.
+9. Memory benchmark.
+
+Add regression thresholds where practical so a future change cannot silently make compression or speed worse.
+
+---
+
+# IMPLEMENTATION ORDER
+
+Do NOT implement everything in one giant rewrite.
+
+Use this order:
+
+1. Baseline + profiler.
+2. Hot-loop and allocation cleanup.
+3. Strong LZ matcher.
+4. Token cost model.
+5. Entropy coding optimization.
+6. Small-file fallback.
+7. Decoder optimization.
+8. Lightweight context modeling.
+9. Reversible transforms.
+10. Cost-aware parsing.
+11. Adaptive strategy selection.
+12. Large-file/block architecture.
+13. Optional C/Rust acceleration.
+14. Competitive benchmark and final tuning.
+
+After each stage:
+
+- run tests.
+- run fuzz.
+- benchmark.
+- inspect regressions.
+- keep the change only if it improves the objective or creates a clearly necessary foundation.
+
+---
+
+# DEFINITION OF "STRONG"
+
+A version is considered stronger only if measurements demonstrate one or more of:
+
+- smaller output on the target corpus.
+- faster encoding at comparable ratio.
+- faster decoding at comparable ratio.
+- lower memory at comparable ratio/speed.
+
+A change that makes code more complicated without measurable benefit should be rejected.
+
+---
+
+# FINAL DIRECTIVE
+
+Be aggressive with algorithmic improvements.
+
+Do not merely clean up the existing implementation.
+Do not stop after making tests pass.
+Do not optimize only the easiest benchmark.
+Do not assume the current architecture is optimal.
+
+Continuously ask:
+
+**Where are the bits being wasted?**
+**Where is CPU time being wasted?**
+**Where are allocations being wasted?**
+**Can the parser make a better decision?**
+**Can the representation become cheaper?**
+**Can the decoder execute fewer operations?**
+
+The end goal is a compressor that is genuinely competitive through better algorithms, better cost modeling, and better engineering—not marketing claims.
+
+When a milestone is complete, record exact benchmark results and the reason the new version is better.
