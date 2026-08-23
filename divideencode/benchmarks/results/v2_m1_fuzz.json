@@ -1,0 +1,13 @@
+{
+  "cases": 105000,
+  "elapsed_s": 55.73,
+  "failures": 0,
+  "decode_errors": 0,
+  "mismatches": 0,
+  "literals": 15765463,
+  "matches": 1280079,
+  "reps": 261920,
+  "max_size": 4096,
+  "verdict": "PASS",
+  "seed": 987654321
+}

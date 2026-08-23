@@ -1,0 +1,1387 @@
+[
+ {
+  "file": "App.java",
+  "original": 100425,
+  "compressed": 5526,
+  "ratio": 0.05503,
+  "ctime_s": 2.6566,
+  "dtime_s": 0.0084,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "f80f5628f7cc6842f46101f7eb11dd53012d589199e5119ea8e74432eade54a4",
+  "encode_node_calls": 42,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 12,
+   "0": 25
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 17,
+    "bytes": 753979,
+    "time_s": 0.0664
+   },
+   "dict_mine": {
+    "calls": 21,
+    "bytes": 983974,
+    "time_s": 1.0027
+   },
+   "dict_sub": {
+    "calls": 12,
+    "bytes": 689062,
+    "time_s": 0.0689
+   },
+   "divide": {
+    "calls": 6,
+    "bytes": 387790,
+    "time_s": 0.0003
+   },
+   "encode_node": {
+    "calls": 42,
+    "bytes": 1438352,
+    "time_s": 7.2191
+   },
+   "estimate": {
+    "calls": 17,
+    "bytes": 753979,
+    "time_s": 0.06
+   },
+   "lz": {
+    "calls": 42,
+    "bytes": 1438352,
+    "time_s": 0.4602
+   }
+  },
+  "tree": "LZ -> 100425 B"
+ },
+ {
+  "file": "main.py",
+  "original": 88515,
+  "compressed": 7481,
+  "ratio": 0.08452,
+  "ctime_s": 2.2286,
+  "dtime_s": 0.0081,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "fa48a95ae16360d3eea10d92d6ed7de513ea08d7ed88863b239cfa47710fddb6",
+  "encode_node_calls": 34,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 2,
+   "1": 8,
+   "0": 23
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 11,
+    "bytes": 481441,
+    "time_s": 0.0426
+   },
+   "dict_mine": {
+    "calls": 13,
+    "bytes": 603812,
+    "time_s": 0.6728
+   },
+   "dict_sub": {
+    "calls": 8,
+    "bytes": 439972,
+    "time_s": 0.0617
+   },
+   "divide": {
+    "calls": 7,
+    "bytes": 351457,
+    "time_s": 0.0002
+   },
+   "encode_node": {
+    "calls": 34,
+    "bytes": 1085272,
+    "time_s": 6.2945
+   },
+   "estimate": {
+    "calls": 11,
+    "bytes": 481441,
+    "time_s": 0.0384
+   },
+   "lz": {
+    "calls": 34,
+    "bytes": 1085272,
+    "time_s": 0.3993
+   }
+  },
+  "tree": "LZ -> 88515 B"
+ },
+ {
+  "file": "program.c",
+  "original": 99918,
+  "compressed": 5623,
+  "ratio": 0.05628,
+  "ctime_s": 1.8596,
+  "dtime_s": 0.0085,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "9815bdfb0630590d1df437bd8a061f8229e05dd468e9da9e7195d24a8ab68e4c",
+  "encode_node_calls": 28,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 2,
+   "1": 6,
+   "0": 19
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 9,
+    "bytes": 492636,
+    "time_s": 0.0437
+   },
+   "dict_mine": {
+    "calls": 13,
+    "bytes": 647964,
+    "time_s": 0.6636
+   },
+   "dict_sub": {
+    "calls": 8,
+    "bytes": 484124,
+    "time_s": 0.061
+   },
+   "divide": {
+    "calls": 5,
+    "bytes": 332070,
+    "time_s": 0.0002
+   },
+   "encode_node": {
+    "calls": 28,
+    "bytes": 1083418,
+    "time_s": 5.2398
+   },
+   "estimate": {
+    "calls": 9,
+    "bytes": 492636,
+    "time_s": 0.0394
+   },
+   "lz": {
+    "calls": 28,
+    "bytes": 1083418,
+    "time_s": 0.3813
+   }
+  },
+  "tree": "LZ -> 99918 B"
+ },
+ {
+  "file": "engine.cpp",
+  "original": 87326,
+  "compressed": 5517,
+  "ratio": 0.06318,
+  "ctime_s": 3.0387,
+  "dtime_s": 0.0077,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "9d6e2ebc01f87e27c2ce0b7841022e9965887730a4fdf0cd12b405b5296bd82f",
+  "encode_node_calls": 48,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 3,
+   "1": 10,
+   "0": 34
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 14,
+    "bytes": 648697,
+    "time_s": 0.0578
+   },
+   "dict_mine": {
+    "calls": 20,
+    "bytes": 870397,
+    "time_s": 1.0017
+   },
+   "dict_sub": {
+    "calls": 13,
+    "bytes": 641021,
+    "time_s": 0.0823
+   },
+   "divide": {
+    "calls": 11,
+    "bytes": 591149,
+    "time_s": 0.0219
+   },
+   "encode_node": {
+    "calls": 48,
+    "bytes": 1515870,
+    "time_s": 8.8236
+   },
+   "estimate": {
+    "calls": 14,
+    "bytes": 648697,
+    "time_s": 0.0517
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 7676,
+    "time_s": 0.002
+   },
+   "lz": {
+    "calls": 48,
+    "bytes": 1515870,
+    "time_s": 0.5407
+   }
+  },
+  "tree": "LZ -> 87326 B"
+ },
+ {
+  "file": "app.js",
+  "original": 83043,
+  "compressed": 5320,
+  "ratio": 0.06406,
+  "ctime_s": 2.7348,
+  "dtime_s": 0.0075,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "28c5d7056ecf80cc556f484732653eca99a07692dbd91f006f98a2ba5bd2cd12",
+  "encode_node_calls": 47,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 3,
+   "1": 12,
+   "0": 31
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 16,
+    "bytes": 635227,
+    "time_s": 0.0577
+   },
+   "dict_mine": {
+    "calls": 20,
+    "bytes": 833120,
+    "time_s": 0.9432
+   },
+   "dict_sub": {
+    "calls": 13,
+    "bytes": 603744,
+    "time_s": 0.0766
+   },
+   "divide": {
+    "calls": 9,
+    "bytes": 462340,
+    "time_s": 0.0208
+   },
+   "encode_node": {
+    "calls": 47,
+    "bytes": 1370890,
+    "time_s": 7.7297
+   },
+   "estimate": {
+    "calls": 16,
+    "bytes": 635227,
+    "time_s": 0.0513
+   },
+   "lz": {
+    "calls": 47,
+    "bytes": 1370890,
+    "time_s": 0.4592
+   }
+  },
+  "tree": "LZ -> 83043 B"
+ },
+ {
+  "file": "app.ts",
+  "original": 88275,
+  "compressed": 5425,
+  "ratio": 0.06146,
+  "ctime_s": 2.9863,
+  "dtime_s": 0.0076,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "12f2551358733daf3970ace3cd0e6408a97f67e94a6cd359b41cfe7c4094918a",
+  "encode_node_calls": 50,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 3,
+   "1": 12,
+   "0": 34
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 16,
+    "bytes": 675878,
+    "time_s": 0.0615
+   },
+   "dict_mine": {
+    "calls": 21,
+    "bytes": 904563,
+    "time_s": 1.0158
+   },
+   "dict_sub": {
+    "calls": 13,
+    "bytes": 642419,
+    "time_s": 0.0762
+   },
+   "divide": {
+    "calls": 11,
+    "bytes": 553815,
+    "time_s": 0.0223
+   },
+   "encode_node": {
+    "calls": 50,
+    "bytes": 1497821,
+    "time_s": 8.5333
+   },
+   "estimate": {
+    "calls": 16,
+    "bytes": 675878,
+    "time_s": 0.0547
+   },
+   "lz": {
+    "calls": 50,
+    "bytes": 1497821,
+    "time_s": 0.4997
+   }
+  },
+  "tree": "LZ -> 88275 B"
+ },
+ {
+  "file": "lib.rs",
+  "original": 93269,
+  "compressed": 5334,
+  "ratio": 0.05719,
+  "ctime_s": 3.3696,
+  "dtime_s": 0.0082,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "b901f4e5a30fb7d6109dfebe0cd2037a8f4436870ecb8420ba9b5829b51250df",
+  "encode_node_calls": 58,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 14,
+   "0": 39
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 19,
+    "bytes": 763491,
+    "time_s": 0.069
+   },
+   "dict_mine": {
+    "calls": 25,
+    "bytes": 1060804,
+    "time_s": 1.1685
+   },
+   "dict_sub": {
+    "calls": 14,
+    "bytes": 700356,
+    "time_s": 0.0825
+   },
+   "divide": {
+    "calls": 14,
+    "bytes": 700356,
+    "time_s": 0.0234
+   },
+   "encode_node": {
+    "calls": 58,
+    "bytes": 1713916,
+    "time_s": 9.6043
+   },
+   "estimate": {
+    "calls": 19,
+    "bytes": 763491,
+    "time_s": 0.0615
+   },
+   "lz": {
+    "calls": 58,
+    "bytes": 1713916,
+    "time_s": 0.501
+   }
+  },
+  "tree": "LZ -> 93269 B"
+ },
+ {
+  "file": "page.html",
+  "original": 90574,
+  "compressed": 15254,
+  "ratio": 0.16841,
+  "ctime_s": 5.5393,
+  "dtime_s": 0.0097,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "e56dadc6de9ec59ca4ae427a3d618db8941276ba3239959d7bb3ea29483bc0f3",
+  "encode_node_calls": 82,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 20,
+   "0": 57
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 25,
+    "bytes": 870829,
+    "time_s": 0.0912
+   },
+   "dict_mine": {
+    "calls": 27,
+    "bytes": 1090716,
+    "time_s": 1.4539
+   },
+   "dict_sub": {
+    "calls": 18,
+    "bytes": 795804,
+    "time_s": 0.1821
+   },
+   "divide": {
+    "calls": 19,
+    "bytes": 813421,
+    "time_s": 0.039
+   },
+   "encode_node": {
+    "calls": 82,
+    "bytes": 2168979,
+    "time_s": 16.6779
+   },
+   "estimate": {
+    "calls": 25,
+    "bytes": 870829,
+    "time_s": 0.0704
+   },
+   "huff": {
+    "calls": 5,
+    "bytes": 80997,
+    "time_s": 0.0208
+   },
+   "lz": {
+    "calls": 81,
+    "bytes": 2144485,
+    "time_s": 1.2643
+   }
+  },
+  "tree": "LZ -> 90574 B"
+ },
+ {
+  "file": "feed.xml",
+  "original": 150450,
+  "compressed": 25021,
+  "ratio": 0.16631,
+  "ctime_s": 7.5782,
+  "dtime_s": 0.0162,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "e27f35bef0947bbbc2727ba1af27f7db39676db56858d2b55d12aa335f748115",
+  "encode_node_calls": 71,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 16,
+   "0": 50
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 21,
+    "bytes": 1377049,
+    "time_s": 0.1247
+   },
+   "dict_mine": {
+    "calls": 40,
+    "bytes": 1999641,
+    "time_s": 2.3824
+   },
+   "dict_sub": {
+    "calls": 21,
+    "bytes": 1377049,
+    "time_s": 0.3543
+   },
+   "divide": {
+    "calls": 14,
+    "bytes": 1051709,
+    "time_s": 0.0512
+   },
+   "encode_node": {
+    "calls": 71,
+    "bytes": 3325173,
+    "time_s": 22.8804
+   },
+   "estimate": {
+    "calls": 21,
+    "bytes": 1377049,
+    "time_s": 0.1095
+   },
+   "huff": {
+    "calls": 4,
+    "bytes": 117208,
+    "time_s": 0.0367
+   },
+   "lz": {
+    "calls": 70,
+    "bytes": 3294619,
+    "time_s": 1.9781
+   }
+  },
+  "tree": "LZ -> 150450 B"
+ },
+ {
+  "file": "data.json",
+  "original": 393678,
+  "compressed": 81528,
+  "ratio": 0.20709,
+  "ctime_s": 15.9514,
+  "dtime_s": 0.2238,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "7e8702ef05caa495e02c84854d29a8ea1804af40966c45c7007a3ea2da371156",
+  "encode_node_calls": 84,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 15,
+   "0": 64
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 20,
+    "bytes": 3659427,
+    "time_s": 0.3304
+   },
+   "dict_mine": {
+    "calls": 40,
+    "bytes": 4314787,
+    "time_s": 2.8259
+   },
+   "dict_sub": {
+    "calls": 20,
+    "bytes": 3659427,
+    "time_s": 1.095
+   },
+   "divide": {
+    "calls": 23,
+    "bytes": 3996261,
+    "time_s": 0.1363
+   },
+   "encode_node": {
+    "calls": 84,
+    "bytes": 10201600,
+    "time_s": 51.0051
+   },
+   "estimate": {
+    "calls": 20,
+    "bytes": 3659427,
+    "time_s": 0.2928
+   },
+   "huff": {
+    "calls": 20,
+    "bytes": 1603021,
+    "time_s": 0.5203
+   },
+   "lz": {
+    "calls": 65,
+    "bytes": 8735187,
+    "time_s": 6.8074
+   }
+  },
+  "tree": "DICT (n=255) -> 393678 B\n \n \nD\nI\nC\nT\n \n(\nn\n=\n2\n5\n5\n)\n \n-\n>\n \n1\n7\n1\n5\n5\n... (262 more)"
+ },
+ {
+  "file": "big.json",
+  "original": 421249,
+  "compressed": 93418,
+  "ratio": 0.22176,
+  "ctime_s": 16.3467,
+  "dtime_s": 0.2606,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "8be71d495465d2ece39688f1b3d3e3749531dce5781c0ac77409b1eea6b1bf71",
+  "encode_node_calls": 85,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 18,
+   "0": 62
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 23,
+    "bytes": 4246659,
+    "time_s": 0.3813
+   },
+   "dict_mine": {
+    "calls": 46,
+    "bytes": 5000323,
+    "time_s": 2.9911
+   },
+   "dict_sub": {
+    "calls": 23,
+    "bytes": 4246659,
+    "time_s": 1.1507
+   },
+   "divide": {
+    "calls": 19,
+    "bytes": 3738083,
+    "time_s": 0.1399
+   },
+   "encode_node": {
+    "calls": 85,
+    "bytes": 11194581,
+    "time_s": 51.0846
+   },
+   "estimate": {
+    "calls": 23,
+    "bytes": 4246659,
+    "time_s": 0.3455
+   },
+   "huff": {
+    "calls": 53,
+    "bytes": 5137267,
+    "time_s": 1.4787
+   },
+   "lz": {
+    "calls": 39,
+    "bytes": 7021411,
+    "time_s": 5.95
+   }
+  },
+  "tree": "DICT (n=255) -> 421249 B\n \n \nD\nI\nC\nT\n \n(\nn\n=\n2\n5\n5\n)\n \n-\n>\n \n1\n8\n1\n3\n8\n... (262 more)"
+ },
+ {
+  "file": "dump.sql",
+  "original": 432464,
+  "compressed": 70310,
+  "ratio": 0.16258,
+  "ctime_s": 12.2419,
+  "dtime_s": 0.1833,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "84e07068954577c5c4e56dd5b718a3a12dcf6a50a18bb351b79d964ea7d7d484",
+  "encode_node_calls": 80,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 14,
+   "0": 61
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 19,
+    "bytes": 3411635,
+    "time_s": 0.3076
+   },
+   "dict_mine": {
+    "calls": 38,
+    "bytes": 4034227,
+    "time_s": 2.5724
+   },
+   "dict_sub": {
+    "calls": 19,
+    "bytes": 3411635,
+    "time_s": 0.76
+   },
+   "divide": {
+    "calls": 21,
+    "bytes": 2692471,
+    "time_s": 0.1455
+   },
+   "encode_node": {
+    "calls": 80,
+    "bytes": 8424130,
+    "time_s": 38.355
+   },
+   "estimate": {
+    "calls": 19,
+    "bytes": 3411635,
+    "time_s": 0.2711
+   },
+   "huff": {
+    "calls": 36,
+    "bytes": 2139664,
+    "time_s": 0.7049
+   },
+   "lz": {
+    "calls": 49,
+    "bytes": 6686444,
+    "time_s": 4.1747
+   }
+  },
+  "tree": "DICT (n=255) -> 432464 B\n \n \nD\nI\nC\nT\n \n(\nn\n=\n2\n5\n5\n)\n \n-\n>\n \n1\n5\n4\n0\n0\n... (262 more)"
+ },
+ {
+  "file": "server.log",
+  "original": 207757,
+  "compressed": 49545,
+  "ratio": 0.23848,
+  "ctime_s": 11.268,
+  "dtime_s": 0.0253,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "01c65b9f1fd7f65715c64244c3f50405ccef742699aea3a5b07de56cbd664a37",
+  "encode_node_calls": 77,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 16,
+   "0": 56
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 21,
+    "bytes": 2055889,
+    "time_s": 0.1826
+   },
+   "dict_mine": {
+    "calls": 42,
+    "bytes": 2744017,
+    "time_s": 2.7704
+   },
+   "dict_sub": {
+    "calls": 21,
+    "bytes": 2055889,
+    "time_s": 0.6453
+   },
+   "divide": {
+    "calls": 18,
+    "bytes": 1899044,
+    "time_s": 0.0679
+   },
+   "encode_node": {
+    "calls": 77,
+    "bytes": 5465304,
+    "time_s": 34.9694
+   },
+   "estimate": {
+    "calls": 21,
+    "bytes": 2055889,
+    "time_s": 0.1624
+   },
+   "huff": {
+    "calls": 12,
+    "bytes": 622767,
+    "time_s": 0.2253
+   },
+   "lz": {
+    "calls": 67,
+    "bytes": 4939677,
+    "time_s": 3.9606
+   }
+  },
+  "tree": "LZ -> 207757 B"
+ },
+ {
+  "file": "table.csv",
+  "original": 246142,
+  "compressed": 81888,
+  "ratio": 0.33269,
+  "ctime_s": 11.5855,
+  "dtime_s": 0.2223,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "c18495c505555731f4a0855425ee23221496572d074c1b9a4424b689f84dafd7",
+  "encode_node_calls": 81,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 14,
+   "0": 62
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 19,
+    "bytes": 2548876,
+    "time_s": 0.2255
+   },
+   "dict_mine": {
+    "calls": 36,
+    "bytes": 3123317,
+    "time_s": 2.3786
+   },
+   "dict_sub": {
+    "calls": 18,
+    "bytes": 2533493,
+    "time_s": 0.7567
+   },
+   "divide": {
+    "calls": 23,
+    "bytes": 2813016,
+    "time_s": 0.0413
+   },
+   "encode_node": {
+    "calls": 81,
+    "bytes": 7499538,
+    "time_s": 35.6731
+   },
+   "estimate": {
+    "calls": 19,
+    "bytes": 2548876,
+    "time_s": 0.2006
+   },
+   "huff": {
+    "calls": 60,
+    "bytes": 4477714,
+    "time_s": 1.3338
+   },
+   "lz": {
+    "calls": 25,
+    "bytes": 3527414,
+    "time_s": 3.1625
+   },
+   "rle": {
+    "calls": 3,
+    "bytes": 50477,
+    "time_s": 0.0012
+   }
+  },
+  "tree": "DICT (n=255) -> 246142 B\n \n \nD\nI\nC\nT\n \n(\nn\n=\n2\n5\n5\n)\n \n-\n>\n \n1\n6\n9\n7\n6\n... (262 more)"
+ },
+ {
+  "file": "text_en.txt",
+  "original": 34497,
+  "compressed": 18142,
+  "ratio": 0.5259,
+  "ctime_s": 3.015,
+  "dtime_s": 0.044,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "597fd4e1324e0eb887e7e4afcd54e4ab248c2229329af77e83a54881def1e3bc",
+  "encode_node_calls": 74,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 6,
+   "1": 23,
+   "0": 44
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 25,
+    "bytes": 512547,
+    "time_s": 0.046
+   },
+   "dict_mine": {
+    "calls": 19,
+    "bytes": 505188,
+    "time_s": 0.5471
+   },
+   "dict_sub": {
+    "calls": 7,
+    "bytes": 215386,
+    "time_s": 0.0789
+   },
+   "divide": {
+    "calls": 21,
+    "bytes": 543943,
+    "time_s": 0.0236
+   },
+   "encode_node": {
+    "calls": 74,
+    "bytes": 1273961,
+    "time_s": 8.5852
+   },
+   "estimate": {
+    "calls": 30,
+    "bytes": 542731,
+    "time_s": 0.0432
+   },
+   "huff": {
+    "calls": 63,
+    "bytes": 941361,
+    "time_s": 0.2499
+   },
+   "lz": {
+    "calls": 11,
+    "bytes": 332600,
+    "time_s": 0.2477
+   },
+   "rle": {
+    "calls": 5,
+    "bytes": 30184,
+    "time_s": 0.0008
+   }
+  },
+  "tree": "HUFFMAN -> 34497 B"
+ },
+ {
+  "file": "notes.md",
+  "original": 20177,
+  "compressed": 3159,
+  "ratio": 0.15656,
+  "ctime_s": 0.5467,
+  "dtime_s": 0.0021,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "5d5f67322a1945c2e9e687e0e041cc5dd0905dfa41569efde43550956ec8704f",
+  "encode_node_calls": 22,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 4,
+   "1": 7,
+   "0": 10
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 12,
+    "bytes": 161080,
+    "time_s": 0.0144
+   },
+   "dict_mine": {
+    "calls": 3,
+    "bytes": 60531,
+    "time_s": 0.1001
+   },
+   "dict_sub": {
+    "calls": 3,
+    "bytes": 60531,
+    "time_s": 0.0148
+   },
+   "divide": {
+    "calls": 3,
+    "bytes": 60531,
+    "time_s": 0.0001
+   },
+   "encode_node": {
+    "calls": 22,
+    "bytes": 282066,
+    "time_s": 1.3835
+   },
+   "estimate": {
+    "calls": 12,
+    "bytes": 161080,
+    "time_s": 0.0129
+   },
+   "lz": {
+    "calls": 22,
+    "bytes": 282066,
+    "time_s": 0.0832
+   }
+  },
+  "tree": "LZ -> 20177 B"
+ },
+ {
+  "file": "doc.pdf",
+  "original": 44889,
+  "compressed": 3471,
+  "ratio": 0.07732,
+  "ctime_s": 2.0538,
+  "dtime_s": 0.0043,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "b84e4cd34bf8ab79c0c74def580dadabf1b0fb523027c7e5920d836c2c65cd7e",
+  "encode_node_calls": 69,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 6,
+   "1": 21,
+   "0": 41
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 28,
+    "bytes": 549896,
+    "time_s": 0.0493
+   },
+   "dict_mine": {
+    "calls": 16,
+    "bytes": 375041,
+    "time_s": 0.5672
+   },
+   "dict_sub": {
+    "calls": 9,
+    "bytes": 207609,
+    "time_s": 0.0264
+   },
+   "divide": {
+    "calls": 17,
+    "bytes": 485359,
+    "time_s": 0.0371
+   },
+   "encode_node": {
+    "calls": 69,
+    "bytes": 1143609,
+    "time_s": 5.7846
+   },
+   "estimate": {
+    "calls": 28,
+    "bytes": 549896,
+    "time_s": 0.0438
+   },
+   "lz": {
+    "calls": 69,
+    "bytes": 1143609,
+    "time_s": 0.3174
+   }
+  },
+  "tree": "DIVIDE (w=2, d=256) -> 44889 B\n \n \nL\nZ\n \n-\n>\n \n2\n2\n4\n4\n4\n \nB\n\n\n \n \nL\nZ\n \n-\n... (9 more)"
+ },
+ {
+  "file": "photo.jpg",
+  "original": 65397,
+  "compressed": 65409,
+  "ratio": 1.00018,
+  "ctime_s": 0.1035,
+  "dtime_s": 0.0,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "f0b340cea53eb839607339cd183913491c049b7d758aedd7db860f5f574dee27",
+  "encode_node_calls": 1,
+  "node_depth_histogram": {
+   "3": 1
+  },
+  "strategy_stats": {
+   "encode_node": {
+    "calls": 1,
+    "bytes": 65397,
+    "time_s": 0.1035
+   },
+   "estimate": {
+    "calls": 1,
+    "bytes": 65397,
+    "time_s": 0.0051
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 65397,
+    "time_s": 0.0
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 65397,
+    "time_s": 0.0028
+   }
+  },
+  "tree": "RAW -> 65397 B"
+ },
+ {
+  "file": "photo.png",
+  "original": 471403,
+  "compressed": 471415,
+  "ratio": 1.00003,
+  "ctime_s": 0.1736,
+  "dtime_s": 0.0002,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "3e7c3d264c6d7658ef6cdaf409570775fea8815977ee13d87bca2d7748c0a8a2",
+  "encode_node_calls": 1,
+  "node_depth_histogram": {
+   "3": 1
+  },
+  "strategy_stats": {
+   "encode_node": {
+    "calls": 1,
+    "bytes": 471403,
+    "time_s": 0.1734
+   },
+   "estimate": {
+    "calls": 1,
+    "bytes": 471403,
+    "time_s": 0.0367
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 471403,
+    "time_s": 0.0
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 471403,
+    "time_s": 0.0013
+   }
+  },
+  "tree": "RAW -> 471403 B"
+ },
+ {
+  "file": "photo.webp",
+  "original": 60216,
+  "compressed": 60228,
+  "ratio": 1.0002,
+  "ctime_s": 0.062,
+  "dtime_s": 0.0,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "e4916d6f861f492384f67d5b0fccfb21b3ab748cb011453f24bbc6d1cf79d93f",
+  "encode_node_calls": 1,
+  "node_depth_histogram": {
+   "3": 1
+  },
+  "strategy_stats": {
+   "encode_node": {
+    "calls": 1,
+    "bytes": 60216,
+    "time_s": 0.0619
+   },
+   "estimate": {
+    "calls": 1,
+    "bytes": 60216,
+    "time_s": 0.0048
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 60216,
+    "time_s": 0.0
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 60216,
+    "time_s": 0.0012
+   }
+  },
+  "tree": "RAW -> 60216 B"
+ },
+ {
+  "file": "archive.zip",
+  "original": 74670,
+  "compressed": 74682,
+  "ratio": 1.00016,
+  "ctime_s": 0.0947,
+  "dtime_s": 0.0,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "3e9fc41fc226f3437a4e9d7dfa16294ce85d7e8cc78fb3bb46b3b2df9d895fd0",
+  "encode_node_calls": 1,
+  "node_depth_histogram": {
+   "3": 1
+  },
+  "strategy_stats": {
+   "encode_node": {
+    "calls": 1,
+    "bytes": 74670,
+    "time_s": 0.0946
+   },
+   "estimate": {
+    "calls": 1,
+    "bytes": 74670,
+    "time_s": 0.0058
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 74670,
+    "time_s": 0.0
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 74670,
+    "time_s": 0.0014
+   }
+  },
+  "tree": "RAW -> 74670 B"
+ },
+ {
+  "file": "random_os.bin",
+  "original": 262144,
+  "compressed": 262156,
+  "ratio": 1.00005,
+  "ctime_s": 0.099,
+  "dtime_s": 0.0001,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "17efde892d990d9155da171fdd1974a086eea247e8120994de16848b8c2b1ed9",
+  "encode_node_calls": 1,
+  "node_depth_histogram": {
+   "3": 1
+  },
+  "strategy_stats": {
+   "encode_node": {
+    "calls": 1,
+    "bytes": 262144,
+    "time_s": 0.0988
+   },
+   "estimate": {
+    "calls": 1,
+    "bytes": 262144,
+    "time_s": 0.0212
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 262144,
+    "time_s": 0.0
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 262144,
+    "time_s": 0.0013
+   }
+  },
+  "tree": "RAW -> 262144 B"
+ },
+ {
+  "file": "random_prng.bin",
+  "original": 262144,
+  "compressed": 818,
+  "ratio": 0.00312,
+  "ctime_s": 0.6643,
+  "dtime_s": 0.0334,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "2e5395cdd697ce8fa947730eade65f3594ae65006c56b26a9e75ce43660387e0",
+  "encode_node_calls": 7,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 1,
+   "1": 1,
+   "0": 4
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 2,
+    "bytes": 332970,
+    "time_s": 0.0306
+   },
+   "dict_mine": {
+    "calls": 5,
+    "bytes": 431274,
+    "time_s": 0.1697
+   },
+   "dict_sub": {
+    "calls": 2,
+    "bytes": 332970,
+    "time_s": 0.0243
+   },
+   "divide": {
+    "calls": 1,
+    "bytes": 70826,
+    "time_s": 0.0
+   },
+   "encode_node": {
+    "calls": 7,
+    "bytes": 748580,
+    "time_s": 1.4393
+   },
+   "estimate": {
+    "calls": 3,
+    "bytes": 595114,
+    "time_s": 0.0462
+   },
+   "lz": {
+    "calls": 7,
+    "bytes": 748580,
+    "time_s": 0.2103
+   }
+  },
+  "tree": "DELTA -> 262144 B\n \n \nD\nI\nC\nT\n \n(\nn\n=\n5\n)\n \n-\n>\n \n2\n6\n2\n1\n4\n4\n \n... (212 more)"
+ },
+ {
+  "file": "sensor_i16.bin",
+  "original": 131072,
+  "compressed": 70900,
+  "ratio": 0.54092,
+  "ctime_s": 1.0778,
+  "dtime_s": 0.0818,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "84f5c7a895c3695bdeb74b36771b48665ac1ebb10ac52521f24796b565cc3963",
+  "encode_node_calls": 8,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 3,
+   "1": 2,
+   "0": 2
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 3,
+    "bytes": 229376,
+    "time_s": 0.0192
+   },
+   "dict_mine": {
+    "calls": 4,
+    "bytes": 163840,
+    "time_s": 0.1763
+   },
+   "dict_sub": {
+    "calls": 1,
+    "bytes": 65536,
+    "time_s": 0.0103
+   },
+   "divide": {
+    "calls": 2,
+    "bytes": 262144,
+    "time_s": 0.0646
+   },
+   "encode_node": {
+    "calls": 8,
+    "bytes": 618158,
+    "time_s": 2.4756
+   },
+   "estimate": {
+    "calls": 6,
+    "bytes": 516096,
+    "time_s": 0.0399
+   },
+   "huff": {
+    "calls": 7,
+    "bytes": 552622,
+    "time_s": 0.1676
+   },
+   "lz": {
+    "calls": 1,
+    "bytes": 65536,
+    "time_s": 0.0905
+   },
+   "rle": {
+    "calls": 3,
+    "bytes": 286720,
+    "time_s": 0.0041
+   }
+  },
+  "tree": "DIVIDE (w=2, d=128) -> 131072 B\n \n \nD\nE\nL\nT\nA\n \n-\n>\n \n6\n5\n5\n3\n6\n \nB\n\n\n \n\n\n... (79 more)"
+ },
+ {
+  "file": "counters_u32.bin",
+  "original": 160000,
+  "compressed": 9437,
+  "ratio": 0.05898,
+  "ctime_s": 1.4097,
+  "dtime_s": 0.044,
+  "roundtrip": true,
+  "sha_match": true,
+  "sha256_original": "5a399a0eed4d03194e6b832575f196fd0f5554383976da64bc050d9c8dcf77ad",
+  "encode_node_calls": 25,
+  "node_depth_histogram": {
+   "3": 1,
+   "2": 6,
+   "1": 5,
+   "0": 13
+  },
+  "strategy_stats": {
+   "delta": {
+    "calls": 10,
+    "bytes": 440000,
+    "time_s": 0.0377
+   },
+   "dict_mine": {
+    "calls": 7,
+    "bytes": 283840,
+    "time_s": 0.2939
+   },
+   "dict_sub": {
+    "calls": 2,
+    "bytes": 120000,
+    "time_s": 0.0182
+   },
+   "divide": {
+    "calls": 6,
+    "bytes": 600000,
+    "time_s": 0.1082
+   },
+   "encode_node": {
+    "calls": 25,
+    "bytes": 1004556,
+    "time_s": 3.6348
+   },
+   "estimate": {
+    "calls": 12,
+    "bytes": 650000,
+    "time_s": 0.0492
+   },
+   "huff": {
+    "calls": 1,
+    "bytes": 160000,
+    "time_s": 0.0504
+   },
+   "lz": {
+    "calls": 23,
+    "bytes": 804556,
+    "time_s": 0.351
+   },
+   "rle": {
+    "calls": 1,
+    "bytes": 40000,
+    "time_s": 0.0026
+   }
+  },
+  "tree": "DIVIDE (w=4, d=3) -> 160000 B\n \n \nD\nE\nL\nT\nA\n \n-\n>\n \n8\n0\n0\n0\n0\n \nB\n\n\n \n\n\n... (205 more)"
+ }
+]

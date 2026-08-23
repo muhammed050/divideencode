@@ -1,0 +1,10 @@
+{
+  "cases": 105000,
+  "elapsed_s": 110.93,
+  "failures": 0,
+  "decode_errors": 0,
+  "mismatches": 0,
+  "raw_fallback_cases": 71942,
+  "verdict": "PASS",
+  "seed": 24681357
+}

@@ -1,0 +1,1754 @@
+# DIVIDEENCODE — MULTI-ALGORITHM COMPRESSION RESEARCH LAB
+
+You are working on the DivideEncode compression project.
+
+Your task is to build an EXPERIMENTAL RESEARCH LAB that tests many fundamentally different reversible compression ideas against the existing DivideEncode V1.
+
+## CRITICAL RULES
+
+This is an EXPERIMENTATION phase.
+
+DO NOT replace V1.
+
+DO NOT delete V1.
+
+DO NOT modify the behavior of V1.
+
+Keep V1 as the permanent baseline.
+
+Create all experiments in a clearly isolated experimental area, for example:
+
+experimental/
+research/
+or another clearly isolated directory.
+
+The existing production compressor must remain untouched.
+
+---
+
+# PRIMARY OBJECTIVE
+
+Do NOT assume one algorithm is the winner.
+
+Instead:
+
+> TEST MANY DIFFERENT COMPRESSION STRATEGIES ON THE SAME DATA, MEASURE THEM, VERIFY LOSSLESSNESS, AND DISCOVER WHICH IDEAS ACTUALLY WORK.
+
+The system must automatically run multiple experiments.
+
+For every experiment measure:
+
+1. compressed size
+2. compression ratio
+3. compression percentage
+4. compression time
+5. decompression time
+6. peak memory if practical
+7. round-trip correctness
+8. transformation time
+9. entropy/size before final coding
+10. final size including ALL metadata and dictionaries
+
+Never report an improvement that excludes metadata.
+
+---
+
+# CORPUS
+
+Use the existing benchmark corpus.
+
+At minimum include:
+
+* App.java
+* app.js
+* app.ts
+* big.json
+* data.json
+* table.csv
+* server.log
+* dump.sql
+* feed.xml
+* page.html
+* archive.zip
+* PNG/image samples if available
+* random data if available
+
+Also generate synthetic datasets:
+
+1. repetitive text
+2. random bytes
+3. all zeros
+4. repeated patterns
+5. JSON with repeated keys
+6. JSON with numeric columns
+7. JSON with timestamps
+8. JSON with long strings
+9. NDJSON
+10. CSV with repeated columns
+11. logs with templates
+12. source code
+13. SQL
+14. HTML/XML
+15. mixed structured data
+
+---
+
+# EXPERIMENT 0 — BASELINES
+
+Measure:
+
+* DivideEncode V1
+* ZIP/DEFLATE
+* gzip
+* Brotli
+* Zstd
+* LZMA2/XZ
+
+Record:
+
+size
+compression time
+decompression time
+
+Do NOT compare only ratios.
+
+Speed matters equally.
+
+---
+
+# EXPERIMENT 1 — MODERN LZ77
+
+Create an isolated LZ experiment.
+
+Test:
+
+A. current LZ
+
+B. hash-chain LZ
+
+C. lazy matching
+
+D. repeat offsets
+
+E. bounded candidate search
+
+F. configurable window sizes:
+
+* 32 KB
+* 64 KB
+* 128 KB
+* 256 KB
+* 512 KB
+* 1 MB
+
+Test multiple match-chain limits:
+
+* 4
+* 8
+* 16
+* 32
+* 64
+
+Measure the exact speed/ratio trade-off.
+
+Do NOT use beam search for this experiment.
+
+---
+
+# EXPERIMENT 2 — LZ + ENTROPY STREAMS
+
+Do not treat an LZ match as one opaque record.
+
+Split the output into:
+
+* literals
+* match lengths
+* distances
+* match/literal flags
+
+Then independently encode each stream.
+
+Test:
+
+A. Huffman
+
+B. canonical Huffman
+
+C. FSE/ANS if practical
+
+D. range coding if practical
+
+Measure:
+
+raw token size
+entropy-coded size
+encoding time
+decoding time
+
+The final size MUST include:
+
+* code tables
+* stream metadata
+* headers
+* padding
+* dictionaries
+
+---
+
+# EXPERIMENT 3 — REPEAT OFFSETS
+
+Implement an isolated experiment with:
+
+* rep0
+* rep1
+* rep2
+* rep3
+
+Test whether repeated distances are common.
+
+Compare:
+
+ordinary distance coding
+
+versus:
+
+repeat-distance coding.
+
+Measure especially:
+
+* JSON
+* logs
+* source code
+* CSV
+
+---
+
+# EXPERIMENT 4 — REVERSIBLE PREDICTION
+
+This experiment is extremely important.
+
+Test reversible predictors such as:
+
+1. previous byte
+2. previous 2-byte context
+3. previous 3-byte context
+4. previous 4-byte context
+5. delta
+6. delta-of-delta
+7. XOR previous byte
+8. XOR previous word
+9. prediction from previous record position
+10. prediction from repeated structured fields
+
+For every predictor:
+
+input
+→ predictor
+→ residual
+→ entropy statistics
+→ final compression
+
+Verify:
+
+decode(encode(input)) == input
+
+exactly.
+
+Do NOT assume the predictor improves compression.
+
+Measure it.
+
+---
+
+# EXPERIMENT 5 — BYTE-PLANE / BIT-PLANE
+
+Test:
+
+A. byte-plane splitting
+
+B. bit-plane splitting
+
+C. integer byte transposition
+
+D. even/odd byte streams
+
+E. high-byte/low-byte separation
+
+Test on:
+
+* numeric JSON
+* CSV
+* binary
+* timestamps
+* sensor-like data
+
+Do NOT enable these transformations for all files automatically.
+
+First benchmark them.
+
+---
+
+# EXPERIMENT 6 — JSON FORMAT-AWARE COMPRESSION
+
+Create a dedicated experimental JSON compressor.
+
+Pipeline:
+
+JSON
+↓
+schema detection
+↓
+identify fields
+↓
+identify types
+↓
+choose row/column representation
+↓
+typed streams
+↓
+compression
+
+Detect:
+
+* integers
+* floats
+* strings
+* booleans
+* nulls
+* timestamps
+* UUIDs
+* enums
+* repeated keys
+
+Test:
+
+A. normal JSON
+
+B. compact JSON
+
+C. columnar representation
+
+D. selective columnar representation
+
+E. hybrid row/column representation
+
+Do NOT assume full columnar is always better.
+
+Measure each.
+
+---
+
+# EXPERIMENT 7 — INTEGER COMPRESSION
+
+For integer streams test:
+
+1. raw fixed-width
+2. VarInt
+3. ZigZag
+4. delta
+5. delta-of-delta
+6. XOR
+7. Rice/Golomb if practical
+8. entropy coding after transformation
+
+Test automatically on every numeric field.
+
+Example:
+
+100001
+100002
+100003
+100004
+
+should be tested as:
+
+100001
+1
+1
+1
+
+But only use the transformation if the final result including metadata is smaller.
+
+---
+
+# EXPERIMENT 8 — STRING DICTIONARY
+
+Build an experimental dictionary layer.
+
+Detect repeated:
+
+* words
+* substrings
+* JSON keys
+* identifiers
+* log templates
+* phrases
+* repeated strings
+
+Test multiple dictionary discovery methods:
+
+A. frequency dictionary
+
+B. greedy substring dictionary
+
+C. suffix-based discovery if practical
+
+D. BPE-style repeated pattern discovery
+
+E. static dictionary
+
+F. corpus-trained dictionary
+
+Every dictionary candidate MUST pay for its own metadata.
+
+Never create a dictionary if:
+
+dictionary overhead >= compression savings.
+
+---
+
+# EXPERIMENT 9 — FSST-LIKE STRING COMPRESSION
+
+If implementing a full FSST implementation is too complex initially:
+
+Create a research prototype inspired by the Fast Static Symbol Table concept.
+
+Test:
+
+1-byte symbols
+2-byte symbols
+3-byte symbols
+4-byte symbols
+variable-length symbols
+
+Map frequently occurring byte sequences to short codes.
+
+Always include:
+
+* symbol table size
+* exception bytes
+* table metadata
+* decoding cost
+
+Compare against raw strings + LZ.
+
+Do not claim it is FSST unless it actually implements FSST.
+
+---
+
+# EXPERIMENT 10 — TOKEN / SOURCE-CODE COMPRESSION
+
+For:
+
+.java
+.js
+.ts
+.py
+.rs
+.cpp
+.html
+.sql
+
+create an experimental tokenizer.
+
+Detect:
+
+* keywords
+* identifiers
+* operators
+* punctuation
+* numbers
+* strings
+* comments
+* whitespace
+
+Test:
+
+raw source
+→ tokens
+→ dictionaries
+→ entropy coding
+
+Also test identifier dictionaries.
+
+Example:
+
+calculateTotalPrice
+calculateTotalTax
+calculateTotalDiscount
+
+should be tested for reusable substrings.
+
+Do not assume lexical parsing improves compression.
+
+Benchmark it.
+
+---
+
+# EXPERIMENT 11 — LOG TEMPLATE COMPRESSION
+
+Detect repeated templates.
+
+Example:
+
+"2026-08-22 INFO User 123 logged in"
+
+"2026-08-22 INFO User 456 logged in"
+
+Transform conceptually into:
+
+timestamp
+level
+template
+user_id
+
+Then compress each stream.
+
+Test whether this beats ordinary LZ.
+
+---
+
+# EXPERIMENT 12 — MULTI-STREAM COMPRESSION
+
+Build a generic stream-separation experiment.
+
+Possible streams:
+
+* text
+* numbers
+* punctuation
+* strings
+* dictionary references
+* metadata
+* repeated structures
+
+Each stream may choose independently:
+
+RAW
+RLE
+Huffman
+FSE
+LZ
+Delta
+VarInt
+
+IMPORTANT:
+
+This must NOT use expensive global beam search.
+
+Use a cheap decision rule.
+
+---
+
+# EXPERIMENT 13 — GRAMMAR / REPEATED PATTERN COMPRESSION
+
+Test:
+
+* repeated substring dictionaries
+* hierarchical dictionaries
+* grammar-like replacement
+* Re-Pair-style replacement if practical
+* BPE-style repeated patterns
+
+Example:
+
+PATTERN_A = repeated 20-byte sequence
+
+PATTERN_B = PATTERN_A + another sequence
+
+Test whether hierarchical replacement beats ordinary LZ.
+
+Always account for dictionary cost.
+
+---
+
+# EXPERIMENT 14 — RE-LZ / TWO-STAGE LZ
+
+Test:
+
+input
+↓
+first-level LZ/pattern extraction
+↓
+metadata/tokens
+↓
+second-level LZ
+↓
+entropy coding
+
+Compare:
+
+single LZ
+
+versus:
+
+two-stage LZ.
+
+Measure whether the second stage actually saves more bytes than it costs in CPU time.
+
+---
+
+# EXPERIMENT 15 — PARSING STRATEGIES
+
+Compare:
+
+A. greedy
+
+B. lazy
+
+C. bounded lookahead
+
+D. dynamic-programming local optimal parse
+
+E. bit-cost-aware parsing
+
+DO NOT implement unlimited global optimization.
+
+Start with bounded windows.
+
+The cost function MUST use the actual estimated encoded bit cost, not simply match length.
+
+---
+
+# EXPERIMENT 16 — CONTEXT MODELING
+
+Prototype:
+
+Order-0
+
+Order-1
+
+Order-2
+
+Order-3
+
+context models.
+
+Measure:
+
+* entropy estimate
+* actual encoded size
+* model memory
+* encoding speed
+* decoding speed
+
+If arithmetic/range coding is too slow in Python, record that fact.
+
+Do not optimize blindly.
+
+---
+
+# EXPERIMENT 17 — ADAPTIVE CODEC SELECTION
+
+Build a very cheap profiler.
+
+Analyze only the first:
+
+4 KB
+8 KB
+16 KB
+
+of input.
+
+Detect:
+
+* JSON
+* NDJSON
+* CSV
+* source code
+* logs
+* XML/HTML
+* binary
+* archive
+* random-like data
+* already-compressed data
+
+Then choose ONE pipeline.
+
+Do not run every full-file compressor.
+
+The profiler must be dramatically cheaper than running a full compression attempt.
+
+---
+
+# EXPERIMENT 18 — SAMPLE-BASED PIPELINE SELECTION
+
+For difficult unknown data:
+
+1. sample first 8 KB
+2. run cheap versions of candidate transforms
+3. estimate final cost
+4. choose top 1–2 candidates
+5. compress full file only with selected candidates
+
+Compare against full exhaustive search.
+
+Measure:
+
+* ratio loss
+* speed improvement
+
+---
+
+# EXPERIMENT 19 — HYBRID ARCHITECTURES
+
+Combine the best ideas.
+
+Test at least these pipelines:
+
+### HYBRID A
+
+Profiler
+→ LZ
+→ split streams
+→ Huffman
+
+### HYBRID B
+
+Profiler
+→ LZ
+→ split streams
+→ FSE/ANS
+
+### HYBRID C
+
+Profiler
+→ reversible prediction
+→ LZ
+→ FSE
+
+### HYBRID D
+
+Profiler
+→ dictionary
+→ LZ
+→ FSE
+
+### HYBRID E
+
+Profiler
+→ JSON schema
+→ typed streams
+→ LZ/FSE
+
+### HYBRID F
+
+Profiler
+→ source tokenizer
+→ dictionary
+→ LZ/FSE
+
+### HYBRID G
+
+Profiler
+→ structured transform
+→ reversible prediction
+→ LZ
+→ FSE
+
+---
+
+# EXPERIMENT 20 — PARALLEL EXPERIMENT RUNNER
+
+Build a research runner capable of running independent experiments concurrently where safe.
+
+For example:
+
+```text
+                    corpus
+                       |
+        +--------------+--------------+
+        |              |              |
+        v              v              v
+     LZ test       JSON test       Prediction
+        |              |              |
+        v              v              v
+     FSE test       Dictionary      Bit-plane
+        |              |              |
+        +--------------+--------------+
+                       |
+                       v
+                 Result database
+```
+
+Use multiprocessing/process isolation if necessary.
+
+Do NOT make the compressor itself multithreaded yet.
+
+The goal is to accelerate RESEARCH, not production compression.
+
+---
+
+# RESULT DATABASE
+
+Every experiment must produce a machine-readable result.
+
+Example:
+
+{
+"algorithm": "...",
+"file": "...",
+"original_size": 421249,
+"compressed_size": 58321,
+"ratio": 0.1384,
+"saved_percent": 86.16,
+"compress_time_s": 0.42,
+"decompress_time_s": 0.08,
+"transform_time_s": 0.03,
+"metadata_bytes": 142,
+"lossless": true
+}
+
+Do NOT hide metadata.
+
+---
+
+# AUTOMATIC RANKING
+
+For every input file rank all algorithms by:
+
+## Best compression
+
+smallest final size.
+
+## Best speed
+
+lowest compression time.
+
+## Best balanced score
+
+Use:
+
+30% compression ratio
+25% compression speed
+15% decompression speed
+10% memory
+10% metadata efficiency
+10% implementation complexity
+
+Also produce a Pareto frontier:
+
+* size
+* compression speed
+
+---
+
+# IMPORTANT: DO NOT OPTIMIZE ONLY FOR ONE FILE
+
+A method that improves big.json by 50% but makes random data 10× slower is NOT automatically the winner.
+
+Produce:
+
+### Per-file winner
+
+and:
+
+### Corpus-wide winner
+
+and:
+
+### Category winner
+
+Categories:
+
+* JSON
+* source code
+* logs
+* CSV
+* XML/HTML
+* binary
+* already-compressed
+* random
+
+---
+
+# CORRECTNESS
+
+Every experimental codec must pass:
+
+encode → decode → SHA-256(original) == SHA-256(decoded)
+
+Test:
+
+* empty
+* 1 byte
+* 2 bytes
+* all zeros
+* all 0xFF
+* random
+* UTF-8
+* invalid UTF-8
+* large files
+* highly repetitive
+* incompressible
+* already compressed
+
+Also test corrupted compressed streams.
+
+A compression algorithm that is not perfectly reversible is considered FAILED.
+
+---
+
+# PERFORMANCE REQUIREMENT
+
+DO NOT allow an experiment to consume unlimited CPU.
+
+Add:
+
+* timeout
+* memory limit where practical
+* experiment cancellation
+* benchmark run count
+* warmup
+* median timing
+
+Start with:
+
+3 runs per test.
+
+For promising candidates:
+
+10 runs.
+
+Report median and min/max.
+
+---
+
+# VERY IMPORTANT — DO NOT REPEAT V1'S MISTAKE
+
+The existing V1 spends too much time exploring possibilities.
+
+The research lab may explore many algorithms, BUT each individual experiment must be simple and measurable.
+
+Do not create:
+
+massive recursive beam search
++
+many transforms
++
+many nested candidates.
+
+Instead:
+
+```text
+ONE IDEA
+→
+ONE TRANSFORM
+→
+ONE MEASUREMENT
+```
+
+Then combine only proven ideas.
+
+---
+
+# SPECIAL TEST FOR big.json
+
+This file is currently one of the biggest weaknesses.
+
+Current baseline:
+
+DE ≈ 93,418 B
+Zstd ≈ 58,313 B
+Brotli ≈ 53,638 B
+LZMA2 ≈ 50,528 B
+
+Run EVERY relevant experiment on big.json.
+
+Produce:
+
+big.json RESEARCH MATRIX
+
+including:
+
+* current LZ
+* new LZ
+* LZ + Huffman
+* LZ + FSE
+* dictionary
+* JSON schema
+* columnar
+* typed integers
+* delta
+* delta-of-delta
+* string dictionary
+* FSST-like
+* multi-stream
+* prediction
+* prediction + LZ
+* prediction + FSE
+* JSON + LZ
+* JSON + FSE
+* JSON + dictionary
+* hybrid pipelines
+
+This file should become the primary research target.
+
+---
+
+# SPECIAL TEST FOR SPEED
+
+The current compressor has extremely high compression latency.
+
+Current examples:
+
+App.java ≈ 24.83 s
+app.js ≈ 9.83 s
+app.ts ≈ 9.55 s
+big.json ≈ 43.66 s
+archive.zip ≈ 2.71 s
+
+For every experiment calculate:
+
+speedup_vs_DE
+
+and:
+
+speedup_vs_zstd
+
+Do NOT assume a smaller output is better if it costs 100× more CPU.
+
+---
+
+# EXPERIMENT BUDGET
+
+Start with cheap experiments.
+
+Phase A:
+
+* LZ variants
+* prediction
+* integer transforms
+* dictionaries
+* stream separation
+
+Phase B:
+
+* FSE/ANS
+* JSON schema
+* tokenizer
+* FSST-like
+* grammar
+
+Phase C:
+
+* context models
+* optimal parsing
+* hybrid systems
+
+Do not implement expensive algorithms before cheaper experiments identify whether they are promising.
+
+---
+
+# FINAL REPORT
+
+Produce:
+
+## 1. Executive Summary
+
+What actually worked?
+
+## 2. Top 20 Experiments
+
+Rank by measured benefit.
+
+## 3. Compression Winners
+
+Per file.
+
+## 4. Speed Winners
+
+Per file.
+
+## 5. Pareto Winners
+
+Best size/speed trade-offs.
+
+## 6. JSON Analysis
+
+Especially big.json.
+
+## 7. Source-Code Analysis
+
+Java/JS/TS.
+
+## 8. Algorithm Failure Analysis
+
+Which ideas made things worse and why?
+
+## 9. New V2 Architecture
+
+Build it ONLY from experimentally validated components.
+
+## 10. Recommended V2
+
+Show exact pipeline.
+
+## 11. Recommended V3 Research
+
+List ideas worth researching later.
+
+---
+
+# FINAL DECISION RULE
+
+Do NOT choose an architecture because it sounds theoretically good.
+
+Choose it because the experiments demonstrate:
+
+* better compression
+* acceptable compression speed
+* fast decompression
+* low metadata overhead
+* perfect reversibility
+* reasonable memory usage
+
+The goal is not:
+
+"find the most sophisticated algorithm."
+
+The goal is:
+
+> Find the simplest architecture that produces the best compression/speed Pareto frontier.
+
+---
+
+# ABSOLUTE STOP CONDITION
+
+After the research experiments and reports are complete:
+
+STOP.
+
+Do NOT replace V1.
+
+Do NOT make V2 production-default.
+
+Do NOT delete old algorithms.
+
+Do NOT perform broad refactoring.
+
+Wait for explicit approval after presenting the experimental results.
+
+Only after reviewing the measured results will we select the winning components and design the final V2 architecture.
+PROCEED WITH V2 IMPLEMENTATION.
+
+The audit is approved. Do NOT continue optimizing the existing V1 exhaustive search.
+
+Important requirements:
+
+1. FREEZE V1 FIRST
+- Preserve the current working compressor exactly.
+- Move/copy it into:
+  divideencode_v1/
+- Do not delete V1.
+- V1 must remain usable for regression comparison.
+- Record the current benchmark results as the immutable V1 baseline.
+
+2. BUILD V2 ALONGSIDE V1
+Create a clean V2 architecture rather than modifying the old recursive search.
+
+Target architecture:
+
+INPUT
+  ↓
+cheap data analysis / classifier
+  ↓
+optional reversible preprocessing
+  ├── NONE
+  ├── DELTA
+  └── DIVIDE
+  ↓
+modern LZ77 tokenizer
+  ├── hash-chain matching
+  ├── lazy matching
+  ├── repeat offsets R0/R1/R2
+  └── bounded search window
+  ↓
+TOKEN STREAMS
+  ├── literals
+  ├── match lengths
+  ├── distances
+  └── repeat-match metadata
+  ↓
+ENTROPY CODING
+  ├── canonical Huffman
+  └── separate Huffman models per stream
+  ↓
+DE2 CONTAINER
+  ├── magic
+  ├── version
+  ├── original size
+  ├── block metadata
+  ├── stream metadata
+  ├── compressed streams
+  └── CRC
+  ↓
+DE2 DECODER
+
+3. M1 — MODERN LZ ENGINE
+
+Do NOT implement the entire V2 at once.
+
+First implement an isolated LZ2 tokenizer.
+
+Requirements:
+- 4-byte hash matching.
+- Hash chains.
+- Configurable chain depth.
+- Configurable window size.
+- Minimum match length = 4.
+- Lazy matching.
+- Repeat offsets:
+  R0, R1, R2.
+- Emit explicit tokens:
+  LITERAL(byte)
+  MATCH(length, distance)
+  REP(length, repeat_id)
+
+The tokenizer must be independently testable.
+
+It must NOT yet replace V1.
+
+Create tests such as:
+
+random data
+repeated data
+JSON
+JavaScript
+TypeScript
+HTML
+CSV
+SQL
+UTF-8 text
+binary data
+large files
+
+Verify:
+
+decode(tokenize(data)) == data
+
+for every test.
+
+4. M1 BENCHMARK
+
+Compare the raw LZ2 token representation against the existing V1 LZ representation.
+
+Generate a report:
+
+file
+input_size
+V1_LZ_size
+V2_LZ_raw_size
+token_count
+literal_count
+match_count
+average_match_length
+average_distance
+rep_match_count
+encode_time
+decode_time
+memory
+
+DO NOT claim V2 is better until these measurements exist.
+
+5. M2 — ENTROPY-CODED TOKEN STREAMS
+
+After LZ2 is proven correct, add:
+
+literal stream
+length stream
+distance stream
+repeat stream / flags
+
+Each stream gets its own canonical Huffman model.
+
+Do not Huffman-code the complete serialized LZ blob.
+
+The whole point is to allow the different symbol distributions to be modeled independently.
+
+Example:
+
+Literals:
+  256-symbol alphabet
+
+Lengths:
+  length-code alphabet
+
+Distances:
+  distance-code alphabet
+
+Repeat offsets:
+  tiny dedicated alphabet
+
+Reuse the existing validated canonical Huffman implementation where possible.
+
+6. DO NOT USE FIXED-WIDTH DISTANCES
+
+This is critical.
+
+The old design pays fixed-width bytes for distance information.
+
+V2 must entropy-code distance symbols.
+
+Use a scheme inspired by DEFLATE/zstd:
+
+distance class
++
+extra bits
+
+and:
+
+length class
++
+extra bits
+
+This allows common short distances and common lengths to become extremely cheap.
+
+7. M3 — DE2 CONTAINER
+
+Create a completely separate format.
+
+For example:
+
+DE2
+version
+flags
+original_size
+block_count
+
+for each block:
+
+block_size
+method
+transform
+literal_stream_size
+length_stream_size
+distance_stream_size
+repeat_stream_size
+Huffman metadata
+streams
+
+CRC
+
+The exact binary layout must be documented before implementation.
+
+Decoder must reject:
+- invalid magic
+- unsupported version
+- truncated streams
+- invalid Huffman tables
+- invalid lengths
+- invalid distances
+- output-size overflow
+- CRC mismatch
+- trailing corruption
+
+8. BLOCK ARCHITECTURE
+
+Use blocks rather than compressing the entire file as one giant structure.
+
+Initial block size:
+
+64 KiB or 256 KiB.
+
+Benchmark both.
+
+Do not assume 256 KiB is optimal.
+
+Measure:
+
+64 KiB
+128 KiB
+256 KiB
+512 KiB
+
+Choose based on actual ratio/speed/memory results.
+
+9. CLASSIFIER
+
+Only AFTER LZ2 + entropy coding works.
+
+The classifier should cheaply estimate:
+
+- entropy
+- alphabet size
+- repetition rate
+- run density
+- match rate
+- numeric structure
+- fixed-width numeric patterns
+- delimiter density
+- JSON/CSV/XML-like structure
+
+Then choose:
+
+RAW
+LZ2
+DELTA → LZ2
+DIVIDE → LZ2
+RLE → LZ2
+
+Do NOT run every expensive codec against the entire input.
+
+The classifier is supposed to replace exhaustive search.
+
+10. VERY IMPORTANT — KEEP DIVIDE
+
+Do not remove DIVIDE.
+
+The audit shows that DIVIDE is currently DE's genuine competitive advantage on numeric data.
+
+Create:
+
+DIVIDE → LZ2 → entropy coding
+
+and benchmark it against:
+
+DIVIDE → old Huffman
+DIVIDE → old LZ
+DIVIDE → LZ2
+DIVIDE → LZ2 + entropy
+
+Especially test:
+
+counters_u32.bin
+sensor_i16.bin
+random_prng.bin
+
+11. STRUCTURED DATA
+
+Do NOT implement the complete V2-C architecture yet.
+
+First make V2-A excellent.
+
+After V2-A is stable, create an experimental branch:
+
+V2-STRUCT
+
+for:
+
+CSV
+JSON
+SQL
+XML
+logs
+
+Potential transformations:
+
+CSV:
+column separation
+
+JSON:
+structural characters / strings / numbers
+
+SQL:
+keywords / identifiers / literals
+
+Do not blindly transform data.
+
+Every transformation must be fully reversible.
+
+12. OPTIMAL PARSING
+
+Do not implement expensive optimal parsing immediately.
+
+First:
+
+greedy
+↓
+lazy-1
+↓
+lazy-2
+↓
+bounded dynamic programming
+
+Benchmark each.
+
+Only keep a more expensive parser if the ratio improvement justifies the CPU cost.
+
+13. RANS / RANGE CODING
+
+Do NOT implement context modeling + range coding in the first V2 release.
+
+First establish:
+
+LZ2
++
+split streams
++
+Huffman
++
+repeat offsets
+
+Then create an experimental entropy backend interface:
+
+EntropyCoder:
+    Huffman
+    RANS
+    Range
+
+This allows the entropy coder to be replaced without redesigning LZ2.
+
+14. PERFORMANCE
+
+The current system is extremely slow because it repeatedly processes the same bytes.
+
+V2 must avoid this.
+
+Target:
+
+ONE primary LZ parse per block.
+
+Avoid:
+
+dozens of full-file LZ passes
+dozens of Huffman passes
+unnecessary DICT mining
+recursive speculative serialization
+
+Measure CPU time using:
+
+time.perf_counter_ns()
+
+and profile with:
+
+python -m cProfile
+
+Also produce a per-function profile.
+
+15. IMPORTANT PYTHON REALITY
+
+Do NOT promise zstd-level speed in pure Python.
+
+Measure first.
+
+If the algorithm is good but Python becomes the bottleneck, design a future accelerator boundary:
+
+divideencode_core
+
+Possible future implementations:
+
+C
+Rust
+Cython
+optional native extension
+
+The Python implementation must remain as the reference implementation.
+
+16. CORRECTNESS HAS PRIORITY
+
+For every V2 change:
+
+compress(data)
+→ decompress(compressed)
+→ compare SHA-256
+
+For all corpus files.
+
+Also generate random fuzz data.
+
+At minimum test:
+
+0 bytes
+1 byte
+2 bytes
+3 bytes
+4 bytes
+5 bytes
+all zero
+all FF
+alternating bytes
+random bytes
+highly repetitive bytes
+UTF-8
+invalid UTF-8
+JSON
+CSV
+binary
+large files
+
+Run at least 100,000 randomized round trips before declaring the decoder stable.
+
+17. BENCHMARK AGAINST:
+
+V1
+ZIP/deflate
+GZIP
+Brotli
+Zstd
+LZMA2/XZ
+
+For every file report:
+
+input
+V1
+V2
+deflate
+gzip
+brotli
+zstd
+xz
+
+compression ratio
+compression time
+decompression time
+memory
+
+Use median of at least 3 runs.
+
+For important final benchmarks use 5 runs.
+
+18. DO NOT CHASE ONE FILE
+
+The goal is NOT:
+
+"make App.java smaller."
+
+The goal is:
+
+improve the geometric mean across the entire corpus.
+
+Report:
+
+arithmetic mean ratio
+geometric mean ratio
+median ratio
+worst case
+best case
+
+Also report how many files V2 wins against:
+
+V1
+deflate
+brotli
+zstd
+xz
+
+19. AUTOMATIC REGRESSION GATES
+
+Do not allow a V2 commit if:
+
+- round-trip fails
+- compressed output is corrupt
+- deterministic output changes unexpectedly
+- V2 becomes >X% worse on the regression corpus without explanation
+- decompression becomes significantly slower without ratio benefit
+
+20. REQUIRED REPORTS
+
+After M1:
+
+docs/V2_M1_LZ_REPORT.md
+
+After M2:
+
+docs/V2_M2_ENTROPY_REPORT.md
+
+After M3:
+
+docs/V2_M3_FORMAT_REPORT.md
+
+After M4:
+
+docs/V2_M4_CLASSIFIER_REPORT.md
+
+Final:
+
+docs/V2_FINAL_BENCHMARK.md
+
+Each report must contain REAL measurements, not estimates.
+
+21. MOST IMPORTANT RULE
+
+DO NOT optimize blindly.
+
+For every optimization:
+
+1. formulate hypothesis
+2. implement
+3. benchmark
+4. compare
+5. keep only if measurable benefit exists
+
+If an idea makes compression smaller but 20× slower, report the trade-off instead of hiding it.
+
+If an idea makes it faster but compression worse, report the exact regression.
+
+22. FIRST ACTION NOW
+
+Do ONLY M0 + M1.
+
+Do not implement entropy coding yet.
+
+Do not implement the classifier yet.
+
+Do not implement structural modeling yet.
+
+Do not implement range coding yet.
+
+Do not modify the V1 algorithm.
+
+First:
+
+FREEZE V1
+↓
+CREATE V2 DIRECTORY
+↓
+IMPLEMENT LZ2 TOKENIZER
+↓
+IMPLEMENT LZ2 DECODER
+↓
+RUN 100,000+ ROUND-TRIP TESTS
+↓
+BENCHMARK V1 LZ vs V2 LZ
+↓
+STOP
+↓
+REPORT RESULTS
+
+At the end of M1, print:
+
+========================================
+V2 M1 COMPLETE
+========================================
+
+Files changed:
+...
+
+Tests:
+...
+Passed:
+...
+Failed:
+...
+
+Round-trip fuzz:
+...
+
+V1 LZ vs V2 LZ:
+...
+
+Average token statistics:
+...
+
+Compression speed:
+...
+
+Decompression speed:
+...
+
+Memory:
+...
+
+Best cases:
+...
+
+Worst cases:
+...
+
+Conclusion:
+...
+
+Then STOP and wait for approval before M2.
+
+DO NOT implement M2 automatically.

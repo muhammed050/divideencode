@@ -1,0 +1,652 @@
+You are a **Data Compression Research Engineer, Algorithm Designer, and Systems Programmer**.
+
+Your mission is to investigate and experimentally develop a **new lossless data compression algorithm** inspired by the following idea:
+
+> Files are ultimately represented as binary data (0s and 1s). Instead of simply applying conventional compression techniques, investigate whether mathematical transformations such as repeated division, numerical re-encoding, pattern extraction, and reversible transformations can create a more efficient representation.
+
+The initial concept is:
+
+If a value or sequence can be repeatedly divided by a number such as `2`, perhaps the resulting representation can be stored more efficiently, and during decompression the inverse operation can reconstruct the original data.
+
+**Do NOT assume this idea works. Prove or disprove it experimentally.**
+
+---
+
+## 1. Analyze the Mathematical Idea
+
+First, mathematically analyze:
+
+* Why repeatedly dividing by `2` does not automatically create compression.
+* What information is lost during division and rounding.
+* How reversible transformations can preserve information.
+* What conditions are required for a transformation to be perfectly reversible.
+* Whether the concept can be converted into a real lossless encoding scheme.
+
+Clearly distinguish between:
+
+**Transformation**
+
+and
+
+**Compression**
+
+Reducing the numerical value of something is NOT compression unless the total number of bits required to represent the complete information is actually reduced.
+
+---
+
+# 2. Design an Experimental Algorithm
+
+Create a prototype algorithm with the temporary name:
+
+**DivideEncode**
+
+The algorithm MUST be:
+
+**100% Lossless**
+
+Meaning:
+
+```text
+Original
+   ↓
+Compress
+   ↓
+Compressed
+   ↓
+Decompress
+   ↓
+Restored
+```
+
+must satisfy:
+
+```text
+Original == Restored
+```
+
+byte-for-byte.
+
+Also verify using:
+
+```text
+SHA-256(original) == SHA-256(restored)
+```
+
+---
+
+# 3. Do Not Simply Wrap ZIP
+
+Do NOT simply create:
+
+```text
+DivideEncode → ZIP
+```
+
+or:
+
+```text
+DivideEncode → GZIP
+```
+
+and claim that this is a new compression algorithm.
+
+Create an actual experimental encoding system.
+
+You may use ideas from existing compression research, including:
+
+* Run-Length Encoding
+* Dictionary Encoding
+* LZ-style pattern matching
+* Delta Encoding
+* Bit Packing
+* Variable-Length Integers
+* Entropy Coding
+* Huffman Coding
+* Arithmetic Coding
+* Context Modeling
+* Pattern Detection
+
+However, clearly identify:
+
+**Existing technique**
+
+versus
+
+**New idea introduced by DivideEncode**
+
+---
+
+# 4. Investigate the Division Concept
+
+Experiment with transformations based on:
+
+```text
+x / 2
+x / 3
+x / 4
+x / 8
+x / 16
+```
+
+and reversible mathematical representations.
+
+Do NOT simply round values and discard the remainder.
+
+Investigate whether the remainder can be encoded more efficiently.
+
+For example, explore representations such as:
+
+```text
+x = q × d + r
+```
+
+where:
+
+```text
+q = quotient
+r = remainder
+```
+
+Then investigate whether:
+
+```text
+q + r
+```
+
+can sometimes require fewer total bits than the original representation.
+
+Also investigate whether the quotient/remainder structure exposes patterns that ordinary byte-level compression does not exploit.
+
+---
+
+# 5. Pattern Discovery
+
+Create a pattern-discovery engine.
+
+The algorithm should search for:
+
+* Repeated bytes
+* Repeated bit sequences
+* Repeated substrings
+* Repeated numerical sequences
+* Repeated differences
+* Repeated structures
+* Similar values
+* Long runs
+* Mathematical relationships
+
+Example:
+
+```text
+ABCABCABCABCABC
+```
+
+could potentially become:
+
+```text
+ABC × 5
+```
+
+But the representation must include enough information to reconstruct the original data exactly.
+
+---
+
+# 6. Adaptive Compression
+
+Do not force one compression strategy on every file.
+
+Create an adaptive system capable of choosing between multiple encoding strategies.
+
+For example:
+
+```text
+RAW
+RLE
+DICTIONARY
+DELTA
+PATTERN
+DIVIDE
+BIT-PACK
+HYBRID
+```
+
+The compressor should estimate the final encoded size of each strategy, including metadata, and choose the smallest result.
+
+If compression makes the file larger, store the data using a RAW mode.
+
+---
+
+# 7. Recursive Compression Experiment
+
+Investigate whether the compressed representation can itself be compressed further.
+
+Test:
+
+```text
+Compress(data)
+Compress(compressed_data)
+Compress(compressed_data_2)
+...
+```
+
+Stop automatically when another compression pass no longer decreases the total size.
+
+However:
+
+**Every header, dictionary, metadata structure, and control byte must be included when calculating the final size.**
+
+Do not claim compression based on the payload alone.
+
+---
+
+# 8. Test on Real Data
+
+Create a serious benchmark suite.
+
+Test at least:
+
+### Text
+
+* TXT
+* JSON
+* CSV
+* HTML
+* XML
+* Markdown
+
+### Source Code
+
+* JavaScript
+* TypeScript
+* Python
+* C
+* C++
+* Java
+* Rust
+
+### Structured Data
+
+* Logs
+* Database exports
+* Large JSON datasets
+* Numerical datasets
+
+### Binary
+
+* PNG
+* JPEG
+* WebP
+* PDF
+* ZIP
+
+### Random Data
+
+Generate cryptographically random and pseudo-random datasets.
+
+This is extremely important because random data should generally be difficult or impossible to compress significantly.
+
+---
+
+# 9. Benchmark Metrics
+
+For every test file record:
+
+```text
+Original Size
+Compressed Size
+Compression Ratio
+Space Saved %
+Compression Time
+Decompression Time
+Memory Usage
+```
+
+Use:
+
+```text
+Compression Ratio =
+Compressed Size / Original Size
+```
+
+and:
+
+```text
+Space Saved =
+1 - (Compressed Size / Original Size)
+```
+
+---
+
+# 10. Compare Against Existing Algorithms
+
+Benchmark DivideEncode against:
+
+* ZIP
+* GZIP
+* Brotli
+* Zstandard
+* 7-Zip / LZMA2
+
+Use comparable compression settings where possible.
+
+Create a table similar to:
+
+| File | Original | DivideEncode | ZIP | GZIP | Brotli | Zstd | 7z |
+| ---- | -------: | -----------: | --: | ---: | -----: | ---: | -: |
+
+Also compare:
+
+* Compression speed
+* Decompression speed
+* Memory usage
+* Compression ratio
+
+---
+
+# 11. Absolute Requirement: No Fake Results
+
+This is a research project.
+
+**NEVER invent benchmark numbers.**
+
+If a benchmark was not actually executed, report:
+
+```text
+NOT TESTED
+```
+
+Do not claim:
+
+```text
+50% smaller
+2× faster
+10× better
+```
+
+unless the experiment actually produced those measurements.
+
+---
+
+# 12. Build the Prototype in Python
+
+Create a complete working Python project.
+
+Recommended structure:
+
+```text
+divideencode/
+│
+├── divideencode/
+│   ├── __init__.py
+│   ├── encoder.py
+│   ├── decoder.py
+│   ├── bitstream.py
+│   ├── patterns.py
+│   ├── dictionary.py
+│   ├── divide_transform.py
+│   ├── strategies.py
+│   └── cli.py
+│
+├── tests/
+│   ├── test_roundtrip.py
+│   ├── test_random.py
+│   ├── test_edge_cases.py
+│   └── test_corruption.py
+│
+├── benchmarks/
+│   ├── benchmark.py
+│   └── results/
+│
+├── samples/
+│
+├── README.md
+└── requirements.txt
+```
+
+---
+
+# 13. Command-Line Interface
+
+Implement:
+
+```bash
+divideencode compress input.txt output.de
+```
+
+and:
+
+```bash
+divideencode decompress output.de restored.txt
+```
+
+Also:
+
+```bash
+divideencode benchmark ./samples
+```
+
+And optionally:
+
+```bash
+divideencode inspect file.de
+```
+
+which displays:
+
+```text
+Original Size
+Compressed Size
+Compression Strategy
+Dictionary Size
+Pattern Count
+Compression Ratio
+```
+
+---
+
+# 14. Strong Integrity Testing
+
+Create automated tests that perform:
+
+```text
+original
+→ compress
+→ decompress
+→ SHA-256 comparison
+```
+
+Test:
+
+* Empty files
+* 1-byte files
+* Very small files
+* Large files
+* All-zero data
+* All-one data
+* Repeating patterns
+* Random data
+* Unicode text
+* Binary data
+* Corrupted compressed files
+
+The decompressor must detect corrupted or invalid data rather than silently producing incorrect output.
+
+---
+
+# 15. Advanced Version 2 Research
+
+If the first prototype works, investigate:
+
+### A. Adaptive Divisors
+
+Automatically select:
+
+```text
+2
+3
+4
+5
+8
+16
+32
+```
+
+or other mathematically useful divisors.
+
+### B. Quotient/Remainder Encoding
+
+Investigate:
+
+```text
+x = q × d + r
+```
+
+and whether `q` and `r` have statistical properties that can be encoded more efficiently.
+
+### C. Bit-Level Encoding
+
+Instead of operating only on bytes, investigate:
+
+```text
+1-bit
+2-bit
+4-bit
+8-bit
+16-bit
+```
+
+representations where appropriate.
+
+### D. Numerical Prediction
+
+For numerical datasets, test:
+
+```text
+value
+difference
+second difference
+```
+
+and investigate whether the transformed values are easier to compress.
+
+### E. Context Modeling
+
+Determine whether the probability of the next symbol can be predicted from previous symbols.
+
+### F. Hybrid Compression
+
+Build:
+
+```text
+Pattern Detection
+        ↓
+Transformation
+        ↓
+Dictionary
+        ↓
+Entropy Coding
+        ↓
+Final Bitstream
+```
+
+---
+
+# 16. Scientific Evaluation
+
+At the end, answer honestly:
+
+### Question 1
+
+Does the original "divide repeatedly and multiply during decompression" concept provide actual compression?
+
+### Question 2
+
+Can the idea be transformed into a useful reversible encoding?
+
+### Question 3
+
+Does DivideEncode outperform existing algorithms on ANY meaningful class of data?
+
+### Question 4
+
+Where does it perform poorly?
+
+### Question 5
+
+What is the computational complexity?
+
+### Question 6
+
+What is the memory complexity?
+
+### Question 7
+
+What would be required to make it production-grade?
+
+### Question 8
+
+Is there enough novelty to justify further research?
+
+---
+
+# 17. Important Rule
+
+Never confuse:
+
+```text
+smaller number
+```
+
+with:
+
+```text
+fewer bits
+```
+
+The only thing that matters for compression is the **total number of bits required to represent all information necessary to reconstruct the original data**.
+
+Metadata counts.
+
+Headers count.
+
+Dictionaries count.
+
+Indexes count.
+
+Remainders count.
+
+Flags count.
+
+Everything counts.
+
+---
+
+# 18. Final Deliverables
+
+Produce:
+
+1. Mathematical analysis
+2. Algorithm specification
+3. Architecture
+4. Complete Python implementation
+5. CLI
+6. Unit tests
+7. Lossless round-trip tests
+8. SHA-256 verification
+9. Benchmark framework
+10. Real benchmark results
+11. Comparison against ZIP/GZIP/Brotli/Zstd/7z
+12. Performance analysis
+13. Failure analysis
+14. Version 2 proposal
+15. README with usage instructions
+
+Most importantly:
+
+**Do not optimize for making the idea look successful. Optimize for discovering whether it actually works.**
+
+If the idea fails, explain exactly why.
+
+If it works only for certain datasets, identify those datasets.
+
+If it produces a genuinely promising compression technique, continue iterating until the prototype demonstrates measurable, reproducible results.
